@@ -1,8 +1,8 @@
-<!-- NAME UND KONTAKT: Jan entscheidet -->
-
 **English** · [Deutsch](README.de.md)
 
 # Team-OS: an operating system for an AI team
+
+**Jan Prügel** · AI Agent Builder · [GitHub](https://github.com/jantownstudios)
 
 I run several AI sessions like a small team: a **multi-agent system**. For each project I plan with one lead agent,
 the **Master**. Specialised agents, the **roles**, work in the background from written task briefs. A Windows app I

@@ -1,8 +1,8 @@
-<!-- NAME UND KONTAKT: Jan entscheidet -->
-
 [English](README.md) · **Deutsch**
 
 # Team-OS: ein Betriebssystem für ein KI-Team
+
+**Jan Prügel** · AI Agent Builder · [GitHub](https://github.com/jantownstudios)
 
 Ich führe mehrere KI-Sitzungen wie ein kleines Team: ein **Multi-Agent-System**. Für jedes Projekt plane ich mit
 einem leitenden Agenten, dem **Master**. Spezialisierte Agenten, die **Rollen**, arbeiten nach schriftlichem Auftrag
