@@ -1,141 +1,153 @@
-# Team-OS: ein Betriebssystem für ein KI-Team
+<!-- NAME UND KONTAKT: Jan entscheidet -->
 
-Ich führe mehrere KI-Sitzungen wie ein kleines Team. Für jedes Projekt plane ich mit einer leitenden KI, dem
-**Master**. Spezialisierte KI-**Rollen** arbeiten nach schriftlichem Auftrag im Hintergrund. Alles läuft in einer
-eigenen Windows-App.
+**English** · [Deutsch](README.de.md)
 
-Dieses Repo ist ein **Schaufenster**: Es zeigt, was entstanden ist und wie gearbeitet wird. Der Code selbst ist
-privat.
+# Team-OS: an operating system for an AI team
 
-![Aufbau: Ich plane mit dem Master, der Master gibt den Rollen Aufträge, die App sichert alles ab, jede Sitzung läuft über Claude Code](bilder/aufbau.png)
+I run several AI sessions like a small team: a **multi-agent system**. For each project I plan with one lead agent,
+the **Master**. Specialised agents, the **roles**, work in the background from written task briefs. A Windows app I
+had built for this orchestrates them all and enforces the rules.
 
-## Auf einen Blick
+This repo is a **showcase**: it shows what was built and how the work is done. The code itself is private. A real,
+checkable example of one round of work is in [`beispiel/`](beispiel/).
+
+![Architecture: I plan with the Master, the Master briefs the agent roles, the app starts them, provides MCP tools and checks every tool call with hooks, every session runs on Claude Code](bilder/architecture.png)
+
+## At a glance
 
 | | |
 |---|---|
-| **Was** | ein festes Arbeitssystem für Software-Projekte mit KI, dazu eine eigene Desktop-App, die es durchsetzt |
-| **Für wen** | für mich als einzelnen Entwickler mit vielen Projekten gleichzeitig |
-| **KI** | Claude Code (das offizielle Programm von Anthropic) mit meinem eigenen Abo |
-| **App** | Windows, geschrieben in Rust, Oberfläche mit egui; dazu eine Web-Ansicht für Handy und Laptop |
-| **Zeitraum** | App seit 2026-10-27, Stand dieser Seite 2026-11-10 |
-| **Meine Rolle** | System entworfen, Entscheidungen getroffen, jede Lieferung abgenommen. **Den Code haben die KI-Rollen geschrieben.** |
+| **What** | a fixed way of building software with AI agents, plus a desktop app of my own that orchestrates and guards it |
+| **Who** | me, as <!-- titel -->AI Agent Builder<!-- /titel -->, with many projects at once |
+| **AI** | Claude Code (Anthropic's official CLI), run headless, on my own subscription |
+| **App** | Windows, written in Rust, UI with egui; plus a web app for phone and laptop |
+| **Period** | app since 2026-10-27, this page as of 2026-11-10 |
+| **My role** | designed the system, made the decisions, signed off every delivery. **The code was written by the AI roles.** |
 
-## Was es ist
+## What it is
 
-Eine KI-Sitzung vergisst alles, sobald sie endet. Und sie prüft ihre eigene Arbeit nicht zuverlässig. Das Team-OS
-löst beides mit klaren Zuständigkeiten und mit Dateien als Gedächtnis.
+An AI session forgets everything once it ends. And it does not reliably check its own work. Team-OS solves both with
+clear responsibilities and with files as memory.
 
-| Begriff | Was das ist |
+| Term | What it is |
 |---|---|
-| **Master** | die leitende KI eines Projekts. Plant mit mir, schreibt Aufträge, prüft Ergebnisse. Baut selbst nichts, damit es immer einen zweiten Blick gibt. |
-| **Rolle** | eine KI-Sitzung für genau einen Auftrag, danach endet sie. Im App-Projekt gibt es fünf: **Bau** (schreibt Code), **Design** (Aussehen), **Test** (probiert fremde Programme aus), **Gegenprobe** (versucht, die Sperren der App zu umgehen), **Recherche** (liest Fachquellen). |
-| **Handoff** | der schriftliche Auftrag an eine Rolle: Ziel, meine Entscheidungen, was sie ändern darf und was nicht. |
-| **Abschluss** | der Bericht der Rolle: was geändert ist, wie sie es geprüft hat, was offen bleibt. |
-| **Kern** | eine kleine Sammlung von Regeln, nach denen alle Master gleich arbeiten. Jede Regel nennt den Vorfall, aus dem sie entstand. |
-| **App** | startet und überwacht alle Sitzungen und setzt die Regeln technisch durch. |
+| **Master** | the lead agent of a project (orchestrator). Plans with me, writes task briefs, reviews results. Builds nothing itself, so there is always a second pair of eyes. |
+| **Role** | an agent session for exactly one task; then it ends. The app project has five: **Build** (writes code), **Design** (look and feel), **Test** (tries out third-party tools), **Red Team** (tries to get past the app's safeguards), **Research** (reads sources). Their working names are German: Bau, Design, Test, Gegenprobe, Recherche. |
+| **Handoff** | the written task brief for a role: goal, my decisions, which files it may change and which not. |
+| **Completion report** | the role's report back (*Abschluss*): what changed, how it checked it, what is still open. |
+| **Core** | a small set of rules that every Master follows. Each rule names the incident it came from. |
+| **App** | starts and supervises all sessions and enforces the rules technically. |
 
-Jede Rolle arbeitet in ihrer eigenen Kopie des Projekts (Git-Worktree). So können mehrere Rollen gleichzeitig
-arbeiten, ohne sich in die Quere zu kommen.
+Each role works in its own copy of the project (Git worktree). So several roles can work in parallel without getting
+in each other's way.
 
-## Meine Rolle, ehrlich
+## My role, honestly
 
-| Ich | Die KI-Rollen |
+| Me | The AI roles |
 |---|---|
-| habe das System entworfen: Regeln, Rollen, Abläufe, Prüfstufen | schreiben den Code, die Tests und die Gestaltung |
-| entscheide, was gebaut wird und in welcher Reihenfolge | arbeiten genau den Auftrag ab, den der Master schreibt |
-| beantworte Freigaben (zum Beispiel: darf diese Rolle starten?) | fragen nach, wenn eine Sperre sie aufhält |
-| nehme jede sichtbare Änderung am echten Fenster ab | berichten im Abschluss, was sie selbst geprüft haben |
+| designed the system: rules, roles, workflows, review stages | write the code, the tests and the design |
+| decide what gets built and in which order | carry out exactly the brief the Master writes |
+| answer approvals (for example: may this role start?) | ask when a safeguard stops them |
+| sign off every visible change in the real window | report in their completion report what they checked themselves |
 
-Ich programmiere die App nicht Zeile für Zeile. Meine Arbeit ist das **System dahinter**: wie Aufgaben geschnitten
-werden, wer was darf, wie geprüft wird, und wann etwas fertig ist.
+I do not program the app line by line. My work is the **system behind it**: how tasks are cut, who may do what, how
+things are checked, and when something is done.
 
-## Wie gearbeitet wird
+## How the work is done
 
-| Schritt | Wer | Was passiert |
+| Step | Who | What happens |
 |---|---|---|
-| 1 · Plan | ich und Master | Wir entscheiden, was als Nächstes kommt. Die Entscheidung steht mit Datum in einer Datei. |
-| 2 · Auftrag | Master | schreibt den Handoff für eine Rolle. |
-| 3 · Start | ich | Ein Klick auf „Erlauben“ startet die Rolle. Ohne Klick startet nichts. |
-| 4 · Lieferung | Rolle | arbeitet im Hintergrund und schreibt einen Abschluss. |
-| 5 · Prüfung | Master | glaubt dem Bericht nicht, sondern prüft selbst: Tests, Änderungen lesen, eigene Bilder. |
-| 6 · Gegenprobe | Rolle Gegenprobe | versucht bei Sicherheitsthemen gezielt, die Sperren zu umgehen. Findet sie einen Weg, geht es zurück an Bau. |
-| 7 · Abnahme | ich | schaue mir das Ergebnis am echten Fenster an. |
-| 8 · Auslieferung | Master | erst nach meinem Go: neue Version, Installationspaket, Notizen für alle Master. |
+| 1 · Plan | me and Master | We decide what comes next. The decision is written to a file with its date. |
+| 2 · Brief | Master | writes the handoff for a role. |
+| 3 · Start | me | One click on "Allow" starts the role. Without the click nothing starts. |
+| 4 · Delivery | role | works in the background and writes a completion report. |
+| 5 · Review | Master | does not trust the report but checks itself: tests, reading the changes, its own screenshots. |
+| 6 · Red team | role Red Team | on security topics, deliberately tries to get past the safeguards. If it finds a way, it goes back to Build. |
+| 7 · Sign-off | me | look at the result in the real window. |
+| 8 · Release | Master | only after my go: new version, installer, notes for all Masters. |
 
-**Warum so viele Stufen?** Ein Bericht ist keine Prüfung, und eine Prüfung ist keine Abnahme. Jede Stufe fängt
-andere Fehler. „Alle Tests grün“ allein zählt bei uns nicht als geprüft. Diese Regeln stammen aus echten Vorfällen
-in früheren Projekten.
+**Why so many stages?** A report is not a review, and a review is not a sign-off. Each stage catches different
+mistakes. "All tests green" alone does not count as checked here. These rules come from real incidents in earlier
+projects.
 
-## Was die App kann
+**See for yourself:** [`beispiel/`](beispiel/) holds the real handoff and completion report of the round that built
+the first version of this showcase.
 
-Eine Auswahl:
+## What the app does
 
-| Funktion | Kurz |
+A selection. The technical term is in brackets.
+
+| Feature | In short |
 |---|---|
-| **Rollen starten und überwachen** | Der Master startet Rollen selbst, ich bestätige per Klick. Ein Stern je Rolle zeigt, wer gerade arbeitet. Ich kann jede Rolle anhalten. |
-| **Freigaben per Klick** | Heikle Schritte (Rolle starten, Löschen, Hochladen) warten auf mein „Erlauben“, am PC, am Handy oder am Laptop. |
-| **Dashboard** | Ich schalte einzelne Werkzeuge der KI ab, für alle Projekte oder nur für eines. Was aus ist, fehlt der KI ganz. |
-| **Eigener Browser** | Die KI surft in einem Browser innerhalb der App, mit einer Sperrliste für Adressen. Bevor sie ein Formular abschickt, fragt die App mich. |
-| **Funk zwischen Mastern** | Ein Master kann einem anderen Projekt eine Aufgabe schicken. Ich sehe jede Nachricht vorher. |
-| **Master-Wechsel** | Wird das Gedächtnis eines Masters voll, sichert er seinen Stand in eine Datei, und ein frischer Master übernimmt. |
-| **Handy und Laptop** | Projekte, Freigaben und Chat auch unterwegs; das Team Center zeigt alle laufenden Master und Rollen auf einer Seite. |
+| **Start and supervise roles** (orchestration, MCP tools `rolle_starten`, `rolle_abbrechen`) | The Master starts roles itself through a tool of the app; I confirm with a click. A star per role shows who is working. I can stop any role. |
+| **Own tools for the agents** (custom MCP server) | The app brings its own MCP server. Masters and roles call its tools: start or stop a role, message another project, read their inbox, report a bug or wish (`wunsch_melden`), use the browser. |
+| **Approvals with one click** (human in the loop, permission prompts as pop-ups) | Sensitive steps (start a role, delete, push) wait for my "Allow", on the PC, the phone or the laptop. |
+| **A check on every tool call** (hooks `PreToolUse`, `Stop`) | Before any tool runs, a hook asks the app: is this tool switched off, is the address on the block list, does this file need my approval? If the hook hangs or crashes, the tool is blocked (fail closed). A `Stop` hook sends a fresh Master back if it wants to answer before it has read its required files. |
+| **Dashboard** (tool permissions per project) | I switch off single tools of the AI, for all projects or just one. A switched-off tool does not exist for the AI. |
+| **Own browser** (browser automation via MCP tools `browser_oeffnen`, `browser_lesen`, `browser_klicken` …, URL block list) | The AI browses in a browser inside the app, with a block list for addresses. Before it submits a form, the app asks me. |
+| **Messages between Masters** (agent-to-agent messaging, MCP tools `funk_senden`, `post_lesen`) | A Master can send another project a task. I see every message word for word before it goes out. |
+| **Master handover** (context management) | When a Master's memory fills up, it saves its state to a file and a fresh Master takes over. |
+| **Phone and laptop** (web app, web push) | Projects, approvals and chat on the go; the Team Center shows all running Masters and roles on one page. |
 
-### Bilder
+### Screenshots
 
-Alle Bilder stammen aus den automatischen Prüfungen der App und zeigen **ausgedachte Testdaten**.
+All screenshots come from the app's automated checks and show **made-up test data**. The app itself is in German.
 
-**Master-Seite:** links Navigation und Post, in der Mitte der Chat mit dem Master, rechts die Rollen. Hier fragt die
-App, wie die Rolle „Bau“ aufhören soll.
+**Master page:** navigation and inbox on the left, the chat with the Master in the middle, the roles on the right.
+Here the app asks how the role "Bau" (Build) should stop.
 
-![Master-Seite mit Karte zum Anhalten einer Rolle](bilder/01-master-seite.png)
+![Master page with a card for stopping a role](bilder/01-master-seite.png)
 
-**Dashboard:** Werkzeuge der KI an- und abschalten, Sperrliste für Adressen.
+**Dashboard:** switch the AI's tools on and off, block list for addresses.
 
-![Dashboard mit Schaltern für Werkzeuge und Sperrliste](bilder/02-dashboard.png)
+![Dashboard with switches for tools and a block list](bilder/02-dashboard.png)
 
-**Team Center am Laptop:** alle Master, laufenden Rollen und Nachrichten zwischen Projekten auf einer Seite.
+**Team Center on the laptop:** all Masters, running roles and messages between projects on one page.
 
-![Team Center mit Mastern, Rollen, Limits und Postfach](bilder/03-team-center.png)
+![Team Center with Masters, roles, limits and inbox](bilder/03-team-center.png)
 
-**Roadmap am Laptop:** der Plan eines Projekts, mit der Rolle, die gerade an einem Schritt arbeitet.
+**Roadmap on the laptop:** a project's plan, with the role that is working on a step right now.
 
-![Roadmap eines Projekts mit laufenden und geplanten Schritten](bilder/04-roadmap.png)
+![Roadmap of a project with running and planned steps](bilder/04-roadmap.png)
 
-**Freigabe am Handy:** Eine Rolle möchte einen Befehl ausführen und wartet auf „Erlauben“ oder „Ablehnen“.
+**Approval on the phone:** a role wants to run a command and waits for "Allow" or "Deny".
 
-<img src="bilder/05-freigabe-handy.png" alt="Freigabe-Karte im Chat am Handy" width="320">
+<img src="bilder/05-freigabe-handy.png" alt="Approval card in the chat on the phone" width="320">
 
-## Zahlen
+## Numbers
 
-Stand 2026-11-10, gemessen vom Master der App:
+As of 2026-11-10. Counted from the Git history (versions, commits) and the numbered handoffs (rounds per role); tests
+from the last full test run, projects from the app's project list.
 
 | | |
 |---|---|
-| Start der App | 2026-10-27 |
-| Versionen | **29**, von 0.1.0 (2026-10-28) bis 0.2.14 (2026-11-10) |
-| Commits im Code | 488 |
-| Runden je Rolle | Bau 73 · Design 51 · Gegenprobe 29 · Test 17 · Recherche 13 |
-| Automatische Tests | 708 im letzten vollen Lauf |
-| Projekte in der App | rund 29 |
+| App started | 2026-10-27 |
+| Versions | **29**, from 0.1.0 (2026-10-28) to 0.2.14 (2026-11-10) |
+| Commits in the code | 491 |
+| Rounds per role | Build 73 · Design 53 · Red Team 29 · Test 10 · Research 13 |
+| Hands-on tests with me | 6, on the real phone, laptop and PC |
+| Automated tests | 708 in the last full run |
+| Projects in the app | about 29 |
 
-Über das ganze Team-OS, alle Projekte zusammen (Stand 2026-10-31):
-
-| | |
-|---|---|
-| Projekte mit eigenem Code-Repo | 22 |
-| Aufträge an Rollen (Handoffs) | 532 |
-| Entscheidungen mit Datum und Begründung | 351 |
-
-## Technik
+Across the whole Team-OS, all projects together (as of 2026-10-31):
 
 | | |
 |---|---|
-| Sprache | Rust |
-| Oberfläche | egui (Desktop), HTML/CSS/JavaScript (Handy und Laptop) |
-| KI | Claude Code als eigenes Programm, gestartet von der App; kein eigener Zugang, kein API-Schlüssel |
-| Zusammenarbeit | Git; jede Rolle in eigener Arbeitskopie (Worktree) |
-| Lokal | Alles läuft auf meinem PC; Handy und Laptop greifen über einen eigenen verschlüsselten Zugang darauf zu. Keine Cloud-Dienste, keine Telemetrie. |
+| Projects with their own code repo | 22 |
+| Task briefs to roles (handoffs) | 532 |
+| Decisions with date and reason | 351 |
+
+## Technology
+
+| | |
+|---|---|
+| Language | Rust |
+| UI | egui (desktop), HTML/CSS/JavaScript (phone and laptop) |
+| Agents | Claude Code started by the app, headless (`claude -p`, `stream-json`), one process per session; no login of its own, no API key |
+| Tools | the app's own MCP server; hooks (`PreToolUse`, `Stop`) on every session |
+| Collaboration | Git; each role in its own working copy (worktree) |
+| Local | Everything runs on my PC; phone and laptop reach it through a private encrypted connection of my own. No cloud services, no telemetry. |
 
 ---
 
-Alle Rechte vorbehalten. Text und Bilder nur zur Ansicht.
+All rights reserved. Text and images for viewing only.
