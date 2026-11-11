@@ -9,7 +9,8 @@ einem leitenden Agenten, dem **Master**. Spezialisierte Agenten, die **Rollen**,
 im Hintergrund. Eine eigene Windows-App orchestriert sie alle und setzt die Regeln durch.
 
 Dieses Repo ist ein **Schaufenster**: Es zeigt, was entstanden ist und wie gearbeitet wird. Der Code selbst ist
-privat. Ein echtes, prüfbares Beispiel für eine Arbeitsrunde liegt in [`beispiel/`](beispiel/).
+privat. Zwei echte, prüfbare Beispiele liegen in [`beispiel/`](beispiel/): ein Auftrag für eine Funktion mit
+Abnahmepunkten und der Bericht, der jeden einzeln belegt, und die Runde, die dieses Schaufenster gebaut hat.
 
 ![Aufbau: Ich plane mit dem Master, der Master gibt den Rollen Aufträge, die App startet sie, stellt MCP-Werkzeuge bereit und prüft jeden Werkzeug-Aufruf mit Hooks, jede Sitzung läuft über Claude Code](bilder/aufbau.png)
 
@@ -18,10 +19,10 @@ privat. Ein echtes, prüfbares Beispiel für eine Arbeitsrunde liegt in [`beispi
 | | |
 |---|---|
 | **Was** | ein festes Arbeitssystem für Software-Projekte mit KI-Agenten, dazu eine eigene Desktop-App, die es orchestriert und absichert |
-| **Wer** | ich, als <!-- titel -->AI Agent Builder<!-- /titel -->, mit vielen Projekten gleichzeitig |
+| **Wer** | ich, als AI Agent Builder, mit vielen Projekten gleichzeitig |
 | **KI** | Claude Code (das offizielle Programm von Anthropic), ohne Fenster gestartet, mit meinem eigenen Abo |
 | **App** | Windows, geschrieben in Rust, Oberfläche mit egui; dazu eine Web-Ansicht für Handy und Laptop |
-| **Zeitraum** | App seit 2026-10-27, Stand dieser Seite 2026-11-10 |
+| **Zeitraum** | App seit 2026-10-27, Stand dieser Seite 2026-11-11 |
 | **Meine Rolle** | System entworfen, Entscheidungen getroffen, jede Lieferung abgenommen. **Den Code haben die KI-Rollen geschrieben.** |
 
 ## Was es ist
@@ -70,8 +71,9 @@ werden, wer was darf, wie geprüft wird, und wann etwas fertig ist.
 andere Fehler. „Alle Tests grün“ allein zählt bei uns nicht als geprüft. Diese Regeln stammen aus echten Vorfällen
 in früheren Projekten.
 
-**Selbst nachsehen:** In [`beispiel/`](beispiel/) liegen der echte Handoff und der echte Abschluss der Runde, die die
-erste Fassung dieses Schaufensters gebaut hat.
+**Selbst nachsehen:** In [`beispiel/`](beispiel/) liegen die echten Handoffs und Abschlüsse von zwei Runden: ein Auftrag
+für eine Funktion mit Abnahmepunkten und der Bericht, der jeden einzeln belegt, und die Runde, die die erste Fassung
+dieses Schaufensters gebaut hat.
 
 ## Was die App kann
 
@@ -82,7 +84,7 @@ Eine Auswahl. Der Fachbegriff steht in Klammern.
 | **Rollen starten und überwachen** (Orchestrierung, MCP-Werkzeuge `rolle_starten`, `rolle_abbrechen`) | Der Master startet Rollen selbst über ein Werkzeug der App, ich bestätige per Klick. Ein Stern je Rolle zeigt, wer gerade arbeitet. Ich kann jede Rolle anhalten. |
 | **Eigene Werkzeuge für die Agenten** (eigener MCP-Server) | Die App bringt einen eigenen MCP-Server mit. Master und Rollen rufen seine Werkzeuge auf: Rolle starten oder anhalten, einem anderen Projekt schreiben, das eigene Postfach lesen, Fehler oder Wünsche melden (`wunsch_melden`), den Browser bedienen. |
 | **Freigaben per Klick** (Human in the Loop, Permission-Prompts als Pop-up) | Heikle Schritte (Rolle starten, Löschen, Hochladen) warten auf mein „Erlauben“, am PC, am Handy oder am Laptop. |
-| **Prüfung jedes Werkzeug-Aufrufs** (Hooks `PreToolUse`, `Stop`) | Bevor ein Werkzeug läuft, fragt ein Hook die App: Ist das Werkzeug abgeschaltet, steht die Adresse auf der Sperrliste, braucht diese Datei meine Freigabe? Hängt oder stürzt der Hook ab, bleibt das Werkzeug gesperrt (fail closed). Ein `Stop`-Hook schickt einen frischen Master zurück, wenn er antworten will, bevor er seine Pflichtdateien gelesen hat. |
+| **Prüfung jedes Werkzeug-Aufrufs** (Hooks `PreToolUse`, `Stop`) | Bevor ein Werkzeug läuft, fragt ein Hook die App: Ist das Werkzeug abgeschaltet, steht die Adresse auf der Sperrliste, braucht diese Datei meine Freigabe? Hängt oder stürzt der Hook ab, soll das Werkzeug gesperrt bleiben (fail closed), und ein `Stop`-Hook schickt einen frischen Master zurück, wenn er antworten will, bevor er seine Pflichtdateien gelesen hat. Beides ist in Tests mit dem echten Hook-Code belegt; die Probe in einer echten Claude-Code-Sitzung steht noch aus. |
 | **Dashboard** (Werkzeug-Rechte je Projekt) | Ich schalte einzelne Werkzeuge der KI ab, für alle Projekte oder nur für eines. Was aus ist, fehlt der KI ganz. |
 | **Eigener Browser** (Browser-Automatisierung über MCP-Werkzeuge `browser_oeffnen`, `browser_lesen`, `browser_klicken` …, Sperrliste für Adressen) | Die KI surft in einem Browser innerhalb der App, mit einer Sperrliste für Adressen. Bevor sie ein Formular abschickt, fragt die App mich. |
 | **Funk zwischen Mastern** (Nachrichten zwischen Agenten, MCP-Werkzeuge `funk_senden`, `post_lesen`) | Ein Master kann einem anderen Projekt eine Aufgabe schicken. Ich sehe jede Nachricht wörtlich, bevor sie rausgeht. |
@@ -116,15 +118,15 @@ App, wie die Rolle „Bau“ aufhören soll.
 
 ## Zahlen
 
-Stand 2026-11-10. Gezählt aus der Git-Historie (Versionen, Commits) und den nummerierten Handoffs (Runden je Rolle);
+Stand 2026-11-11. Gezählt aus der Git-Historie (Versionen, Commits) und den nummerierten Handoffs (Runden je Rolle);
 Tests aus dem letzten vollen Testlauf, Projekte aus der Projektliste der App.
 
 | | |
 |---|---|
 | Start der App | 2026-10-27 |
 | Versionen | **29**, von 0.1.0 (2026-10-28) bis 0.2.14 (2026-11-10) |
-| Commits im Code | 491 |
-| Runden je Rolle | Bau 73 · Design 53 · Gegenprobe 29 · Test 10 · Recherche 13 |
+| Commits im Code | 493 |
+| Runden je Rolle | Bau 73 · Design 54 · Gegenprobe 29 · Test 10 · Recherche 13 |
 | Tests mit mir | 6, am echten Handy, Laptop und PC |
 | Automatische Tests | 708 im letzten vollen Lauf |
 | Projekte in der App | rund 29 |

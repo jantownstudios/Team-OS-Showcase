@@ -8,8 +8,9 @@ I run several AI sessions like a small team: a **multi-agent system**. For each 
 the **Master**. Specialised agents, the **roles**, work in the background from written task briefs. A Windows app I
 had built for this orchestrates them all and enforces the rules.
 
-This repo is a **showcase**: it shows what was built and how the work is done. The code itself is private. A real,
-checkable example of one round of work is in [`beispiel/`](beispiel/).
+This repo is a **showcase**: it shows what was built and how the work is done. The code itself is private. Two real,
+checkable examples are in [`beispiel/`](beispiel/): a feature brief with acceptance tests and the report that
+backs each one, and the round that built this showcase.
 
 ![Architecture: I plan with the Master, the Master briefs the agent roles, the app starts them, provides MCP tools and checks every tool call with hooks, every session runs on Claude Code](bilder/architecture.png)
 
@@ -18,10 +19,10 @@ checkable example of one round of work is in [`beispiel/`](beispiel/).
 | | |
 |---|---|
 | **What** | a fixed way of building software with AI agents, plus a desktop app of my own that orchestrates and guards it |
-| **Who** | me, as <!-- titel -->AI Agent Builder<!-- /titel -->, with many projects at once |
+| **Who** | me, as AI Agent Builder, with many projects at once |
 | **AI** | Claude Code (Anthropic's official CLI), run headless, on my own subscription |
 | **App** | Windows, written in Rust, UI with egui; plus a web app for phone and laptop |
-| **Period** | app since 2026-10-27, this page as of 2026-11-10 |
+| **Period** | app since 2026-10-27, this page as of 2026-11-11 |
 | **My role** | designed the system, made the decisions, signed off every delivery. **The code was written by the AI roles.** |
 
 ## What it is
@@ -70,8 +71,9 @@ things are checked, and when something is done.
 mistakes. "All tests green" alone does not count as checked here. These rules come from real incidents in earlier
 projects.
 
-**See for yourself:** [`beispiel/`](beispiel/) holds the real handoff and completion report of the round that built
-the first version of this showcase.
+**See for yourself:** [`beispiel/`](beispiel/) holds the real handoffs and completion reports of two rounds: a feature
+brief with acceptance tests and the report that backs each one, and the round that built the first version of this
+showcase.
 
 ## What the app does
 
@@ -82,7 +84,7 @@ A selection. The technical term is in brackets.
 | **Start and supervise roles** (orchestration, MCP tools `rolle_starten`, `rolle_abbrechen`) | The Master starts roles itself through a tool of the app; I confirm with a click. A star per role shows who is working. I can stop any role. |
 | **Own tools for the agents** (custom MCP server) | The app brings its own MCP server. Masters and roles call its tools: start or stop a role, message another project, read their inbox, report a bug or wish (`wunsch_melden`), use the browser. |
 | **Approvals with one click** (human in the loop, permission prompts as pop-ups) | Sensitive steps (start a role, delete, push) wait for my "Allow", on the PC, the phone or the laptop. |
-| **A check on every tool call** (hooks `PreToolUse`, `Stop`) | Before any tool runs, a hook asks the app: is this tool switched off, is the address on the block list, does this file need my approval? If the hook hangs or crashes, the tool is blocked (fail closed). A `Stop` hook sends a fresh Master back if it wants to answer before it has read its required files. |
+| **A check on every tool call** (hooks `PreToolUse`, `Stop`) | Before any tool runs, a hook asks the app: is this tool switched off, is the address on the block list, does this file need my approval? If the hook hangs or crashes, the tool is meant to stay blocked (fail closed), and a `Stop` hook sends a fresh Master back if it wants to answer before it has read its required files. Both are verified in tests with the real hook code; the check in a live Claude Code session is still pending. |
 | **Dashboard** (tool permissions per project) | I switch off single tools of the AI, for all projects or just one. A switched-off tool does not exist for the AI. |
 | **Own browser** (browser automation via MCP tools `browser_oeffnen`, `browser_lesen`, `browser_klicken` …, URL block list) | The AI browses in a browser inside the app, with a block list for addresses. Before it submits a form, the app asks me. |
 | **Messages between Masters** (agent-to-agent messaging, MCP tools `funk_senden`, `post_lesen`) | A Master can send another project a task. I see every message word for word before it goes out. |
@@ -116,15 +118,15 @@ Here the app asks how the role "Bau" (Build) should stop.
 
 ## Numbers
 
-As of 2026-11-10. Counted from the Git history (versions, commits) and the numbered handoffs (rounds per role); tests
+As of 2026-11-11. Counted from the Git history (versions, commits) and the numbered handoffs (rounds per role); tests
 from the last full test run, projects from the app's project list.
 
 | | |
 |---|---|
 | App started | 2026-10-27 |
 | Versions | **29**, from 0.1.0 (2026-10-28) to 0.2.14 (2026-11-10) |
-| Commits in the code | 491 |
-| Rounds per role | Build 73 · Design 53 · Red Team 29 · Test 10 · Research 13 |
+| Commits in the code | 493 |
+| Rounds per role | Build 73 · Design 54 · Red Team 29 · Test 10 · Research 13 |
 | Hands-on tests with me | 6, on the real phone, laptop and PC |
 | Automated tests | 708 in the last full run |
 | Projects in the app | about 29 |
