@@ -58,7 +58,7 @@ things are checked, and when something is done.
 
 | Step | Who | What happens |
 |---|---|---|
-| 1 · Plan | me and Master | We decide what comes next. The decision is written to a file with its date. |
+| 1 · Plan | me and Master | We decide what comes next. The decision is written to a file with its date ([examples](#seven-decisions)). |
 | 2 · Brief | Master | writes the handoff for a role. |
 | 3 · Start | me | One click on "Allow" starts the role. Without the click nothing starts. |
 | 4 · Delivery | role | works in the background and writes a completion report. |
@@ -74,6 +74,107 @@ projects.
 **See for yourself:** [`beispiel/`](beispiel/) holds the real handoffs and completion reports of two rounds: a feature
 brief with acceptance tests and the report that backs each one, and the round that built the first version of this
 showcase.
+
+## Seven decisions
+
+Seven of 731 dated decisions across 29 projects (counted 2026-11-11), one per kind of decision and sorted by kind,
+not by importance, each in my own words.
+
+### How an agent should behave
+
+> „… wirst du potentiell durch die Umgebung probieren, das Werkzeug wieder zu aktivieren. Ist ja deine Aufgabe. Ich will aber den Stecker ziehen, dann arbeiten die 3 Master, alles ist fine, du stellst die Rückfrage und ich verstehe überhaupt erst, wo dein Problem herkommt“
+>
+> *Translation:* "… you will potentially try, through the environment, to switch the tool back on. That's your job, after all. But I want to pull the plug: then the 3 Masters work, everything is fine, you ask me back, and only then do I even understand where your problem comes from"
+
+**Occasion:** I wanted to be able to switch off a chain of messages between Masters (one project's lead agent writes
+to the next, and that one to the next), and an AI would try to get around a tool that is merely blocked.
+
+**What came of it:** A switched-off tool does not exist for the AI at all, and every Master now asks me back instead of
+looking for another way.
+
+**Project:** Team-OS App, 2026-10-30
+
+### Using what already exists instead of building new
+
+> „im Falle eines Verbindungsabbruchs automatisch einen Savestate im Emulator setzen. Dann könnte man jederzeit wieder gemeinsam einsteigen, die Funktion gibt es ja, wir müssten sie nur anders nutzen.“
+>
+> *Translation:* "if the connection drops, automatically set a savestate in the emulator. Then you could rejoin together at any time, the feature exists after all, we would just have to use it differently."
+
+**Occasion:** The question was what happens when the connection between two players drops during a link battle in an
+emulator; a savestate is the emulator's saved snapshot of the whole game.
+
+**What came of it:** Worked out by the Master and confirmed by me: both sides save a state at the start of every round
+and, on rejoining, load the last round they had in common.
+
+**Project:** a game tool of mine (a randomizer for a handheld classic), 2026-11-10
+
+### Turning a limit into a principle
+
+> „Wir wollen Musik-Creation leichter für Künstler mit Hilfe machen, nicht Künstlern eine weitere KI geben, die Musik generiert.“
+>
+> *Translation:* "We want to make music creation easier for artists with help, not give artists yet another AI that generates music."
+
+**Occasion:** The question was which role the AI should play in my music program.
+
+**What came of it:** The assistant (Souli) asks, suggests and explains, the human makes the music, and an AI that
+generates music is ruled out for later as well.
+
+**Project:** Big Bang, 2026-10-18
+
+### Saying no on purpose
+
+> „dann brauche ich keinen Randomizer spielen“
+>
+> *Translation:* "then I don't need to play a randomizer"
+
+**Occasion:** Going through the app's flow on my own prototype, the question was whether you can see the rolled
+results in advance; a randomizer re-rolls a game, and the surprise is the whole point.
+
+**What came of it:** No preview, because it would spoil the run; the changes stay traceable through a log instead.
+
+**Project:** a game tool of mine (a randomizer for a handheld classic), 2026-10-11
+
+### Against the AI's recommendation
+
+> „Erstmal nur Startseite über die Anbindung machen wir uns dann nämlich erst genau gedanken“
+>
+> *Translation:* "Just the start page for now, because about the connection we'll first think carefully"
+
+**Occasion:** For Build 1 the Master had proposed the start page plus the connection (how the app talks to Claude
+Code), tested invisibly, to check the biggest risk early.
+
+**What came of it:** Proposal rejected: Build 1 started no Claude process at all, and the connection was to be thought
+through with me separately first.
+
+**Project:** Team-OS App, 2026-10-27
+
+### Law and risk
+
+> „offensichtlich haben wir ja die Assistenschnittstelle so gebaut das ich ein Modell ranhaue welches ich nutzen dürfte“
+>
+> *Translation:* "obviously we built the assistant interface so that I plug in a model that I would be allowed to use"
+
+**Occasion:** An analysis of Team-OS asked whether my login would be an obstacle if the app ever went to others, since
+the app runs on my personal Claude subscription.
+
+**What came of it:** The app never talks to Claude directly but to a connector, so anyone else would plug in a model
+they may use, and my subscription stays my own connector.
+
+**Project:** Team-OS App, 2026-10-31
+
+### Changing the system, not the single case
+
+> „klingt so als ob das OS eine neue Regel braucht. In Zukunft soll ja der Bau eh in Subordnern stattfinden und dort darf es pro Projekt ja eh nur einen geben usw“
+>
+> *Translation:* "sounds like the OS needs a new rule. In future the build is supposed to happen in subfolders anyway, and there may only be one per project anyway, etc."
+
+**Occasion:** My drive was full again (0 of 111 GB free, about 82 GB in build folders), because an earlier rule had no
+fixed moment for clearing them; "the OS" is Team-OS, the rules for all projects.
+
+**What came of it:** The core rule was tightened: one build folder inside the code folder, which the Master measures
+after every merge and clears above 10 GB; clearing six old build folders freed 64 GB.
+
+**Project:** Team-OS core, 2026-10-28
 
 ## What the app does
 
@@ -125,19 +226,11 @@ from the last full test run, projects from the app's project list.
 |---|---|
 | App started | 2026-10-27 |
 | Versions | **29**, from 0.1.0 (2026-10-28) to 0.2.14 (2026-11-10) |
-| Commits in the code | 493 |
-| Rounds per role | Build 73 · Design 54 · Red Team 29 · Test 10 · Research 13 |
+| Commits in the code | 497 |
+| Rounds per role | Build 73 · Design 55 · Red Team 29 · Test 10 · Research 14 |
 | Hands-on tests with me | 6, on the real phone, laptop and PC |
 | Automated tests | 708 in the last full run |
 | Projects in the app | about 29 |
-
-Across the whole Team-OS, all projects together (as of 2026-10-31):
-
-| | |
-|---|---|
-| Projects with their own code repo | 22 |
-| Task briefs to roles (handoffs) | 532 |
-| Decisions with date and reason | 351 |
 
 ## Technology
 

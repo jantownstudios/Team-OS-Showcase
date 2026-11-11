@@ -58,7 +58,7 @@ werden, wer was darf, wie geprüft wird, und wann etwas fertig ist.
 
 | Schritt | Wer | Was passiert |
 |---|---|---|
-| 1 · Plan | ich und Master | Wir entscheiden, was als Nächstes kommt. Die Entscheidung steht mit Datum in einer Datei. |
+| 1 · Plan | ich und Master | Wir entscheiden, was als Nächstes kommt. Die Entscheidung steht mit Datum in einer Datei ([Beispiele](#sieben-entscheidungen)). |
 | 2 · Auftrag | Master | schreibt den Handoff für eine Rolle. |
 | 3 · Start | ich | Ein Klick auf „Erlauben“ startet die Rolle. Ohne Klick startet nichts. |
 | 4 · Lieferung | Rolle | arbeitet im Hintergrund und schreibt einen Abschluss. |
@@ -74,6 +74,94 @@ in früheren Projekten.
 **Selbst nachsehen:** In [`beispiel/`](beispiel/) liegen die echten Handoffs und Abschlüsse von zwei Runden: ein Auftrag
 für eine Funktion mit Abnahmepunkten und der Bericht, der jeden einzeln belegt, und die Runde, die die erste Fassung
 dieses Schaufensters gebaut hat.
+
+## Sieben Entscheidungen
+
+Sieben von 731 datierten Entscheidungen in 29 Projekten (gezählt am 2026-11-11), je Art eine und nach Art sortiert,
+nicht nach Wichtigkeit, jeweils in meinem Wortlaut.
+
+### Wie sich ein Agent verhalten soll
+
+> „… wirst du potentiell durch die Umgebung probieren, das Werkzeug wieder zu aktivieren. Ist ja deine Aufgabe. Ich will aber den Stecker ziehen, dann arbeiten die 3 Master, alles ist fine, du stellst die Rückfrage und ich verstehe überhaupt erst, wo dein Problem herkommt“
+
+**Anlass:** Ich wollte eine Kette von Nachrichten zwischen Mastern abschalten können (der leitende Agent eines Projekts
+schreibt dem nächsten, der wieder dem nächsten), und ein bloß blockiertes Werkzeug würde eine KI umgehen wollen.
+
+**Was daraus wurde:** Ein abgeschaltetes Werkzeug ist für die KI gar nicht vorhanden, und jeder Master fragt seitdem bei
+mir nach, statt einen Ersatzweg zu suchen.
+
+**Projekt:** Team-OS App, 2026-10-30
+
+### Vorhandenes nutzen statt neu bauen
+
+> „im Falle eines Verbindungsabbruchs automatisch einen Savestate im Emulator setzen. Dann könnte man jederzeit wieder gemeinsam einsteigen, die Funktion gibt es ja, wir müssten sie nur anders nutzen.“
+
+**Anlass:** Die Frage war, was passiert, wenn im Link-Kampf zweier Spieler im Emulator die Verbindung abreißt; ein
+Savestate ist ein gespeicherter Spielzustand des Emulators.
+
+**Was daraus wurde:** Vom Master ausgestaltet und von mir bestätigt: Beide Seiten sichern zu jedem Rundenbeginn einen
+Zustand und laden beim Wiedereinstieg die letzte gemeinsame Runde.
+
+**Projekt:** ein Spiel-Werkzeug von mir (ein Randomizer für einen Handheld-Klassiker), 2026-11-10
+
+### Eine Grenze zum Prinzip machen
+
+> „Wir wollen Musik-Creation leichter für Künstler mit Hilfe machen, nicht Künstlern eine weitere KI geben, die Musik generiert.“
+
+**Anlass:** Die Frage war, welche Rolle die KI in meinem Musikprogramm bekommt.
+
+**Was daraus wurde:** Der Assistent (Souli) fragt, schlägt vor und erklärt, die Musik macht der Mensch, und eine KI, die
+Musik erzeugt, ist auch für später ausgeschlossen.
+
+**Projekt:** Big Bang, 2026-10-18
+
+### Bewusst Nein sagen
+
+> „dann brauche ich keinen Randomizer spielen“
+
+**Anlass:** Beim Durchgehen des App-Ablaufs an meinem eigenen Prototyp ging es darum, ob man die gewürfelten
+Ergebnisse vorher sehen kann; ein Randomizer würfelt ein Spiel neu, die Überraschung ist der Zweck.
+
+**Was daraus wurde:** Keine Vorschau, weil sie den Run spoilern würde; nachvollziehbar bleiben die Änderungen über ein
+Log.
+
+**Projekt:** ein Spiel-Werkzeug von mir (ein Randomizer für einen Handheld-Klassiker), 2026-10-11
+
+### Gegen die Empfehlung der KI
+
+> „Erstmal nur Startseite über die Anbindung machen wir uns dann nämlich erst genau gedanken“
+
+**Anlass:** Der Master hatte für Bau 1 die Startseite plus die unsichtbar getestete Anbindung vorgeschlagen (die
+Verbindung der App zu Claude Code), um das größte Risiko früh zu prüfen.
+
+**Was daraus wurde:** Vorschlag verworfen: Bau 1 startete gar kein Claude, und die Anbindung sollte vorher eigens mit
+mir durchdacht werden.
+
+**Projekt:** Team-OS App, 2026-10-27
+
+### Recht und Risiko
+
+> „offensichtlich haben wir ja die Assistenschnittstelle so gebaut das ich ein Modell ranhaue welches ich nutzen dürfte“
+
+**Anlass:** Eine Analyse des Team-OS fragte, ob mein Login eine Hürde wäre, falls die App je an andere geht, denn die
+App läuft über mein persönliches Claude-Abo.
+
+**Was daraus wurde:** Die App spricht nie direkt mit Claude, sondern mit einem Andock-Teil; bei Weitergabe dockt jeder
+ein Modell an, das er nutzen darf, und mein Abo bleibt mein eigener Andock-Teil.
+
+**Projekt:** Team-OS App, 2026-10-31
+
+### Das System ändern statt den Einzelfall
+
+> „klingt so als ob das OS eine neue Regel braucht. In Zukunft soll ja der Bau eh in Subordnern stattfinden und dort darf es pro Projekt ja eh nur einen geben usw“
+
+**Anlass:** Mein Laufwerk war wieder voll (0 von 111 GB frei, rund 82 GB Bau-Ordner), weil eine frühere Regel keinen
+festen Zeitpunkt zum Leeren hatte; „das OS“ ist das Team-OS, die Regeln für alle Projekte.
+
+**Was daraus wurde:** Die Kern-Regel wurde nachgeschärft: ein Bau-Ordner im Code-Ordner, den der Master nach jedem
+Zusammenführen misst und ab 10 GB leert; sechs geleerte alte Bau-Ordner brachten 64 GB frei.
+
+**Projekt:** Team-OS-Kern, 2026-10-28
 
 ## Was die App kann
 
@@ -125,19 +213,11 @@ Tests aus dem letzten vollen Testlauf, Projekte aus der Projektliste der App.
 |---|---|
 | Start der App | 2026-10-27 |
 | Versionen | **29**, von 0.1.0 (2026-10-28) bis 0.2.14 (2026-11-10) |
-| Commits im Code | 493 |
-| Runden je Rolle | Bau 73 · Design 54 · Gegenprobe 29 · Test 10 · Recherche 13 |
+| Commits im Code | 497 |
+| Runden je Rolle | Bau 73 · Design 55 · Gegenprobe 29 · Test 10 · Recherche 14 |
 | Tests mit mir | 6, am echten Handy, Laptop und PC |
 | Automatische Tests | 708 im letzten vollen Lauf |
 | Projekte in der App | rund 29 |
-
-Über das ganze Team-OS, alle Projekte zusammen (Stand 2026-10-31):
-
-| | |
-|---|---|
-| Projekte mit eigenem Code-Repo | 22 |
-| Aufträge an Rollen (Handoffs) | 532 |
-| Entscheidungen mit Datum und Begründung | 351 |
 
 ## Technik
 
