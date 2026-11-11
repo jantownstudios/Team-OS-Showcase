@@ -1,8 +1,9 @@
-# Real examples: two rounds of work
+# Real examples: a round of work and a rejected delivery
 
-These files are the real documents of two rounds. They are copied from the private code repo, **unchanged except
-for redactions**. Each round has a **handoff** (the task brief the Master wrote for a role) and a **completion report**
-(*Abschluss*: what the role changed, how it checked its own work, what is still open).
+Two examples. The first is the real documents of one round, copied from the private code repo, **unchanged except
+for redactions**: a **handoff** (the task brief the Master wrote for a role) and a **completion report** (*Abschluss*:
+what the role changed, how it checked its own work, what is still open). The second is a case I wrote up from the
+sources of another project: a delivery that two roles reported as checked and that I did not sign off.
 
 ## 1 · Build 73: a feature with acceptance tests
 
@@ -25,32 +26,36 @@ The handoff sets five acceptance points, each to be measured with a test:
 
 The test counts are above that table (110 and 141 passed, 0 failed).
 
-## 2 · Design 52: the round that built this showcase
+## 2 · A delivery I rejected
 
-**Which round:** Design 52, on 2026-11-10, role *Design*. It built the first version of this showcase: README,
-architecture diagram, screenshots. The Master then reviewed it, changed two lines, and published it after my go. The
-handoff says openly that the showcase is meant for job applications.
+The README says „a report is not a review, and a review is not a sign-off“. This case shows the sign-off failing a
+delivery whose reports said it was checked.
+
+**Which rounds:** Design 7 and Build 6, on 2026-10-14, in a desktop player of mine for a music streaming service. Both
+roles reported the main window as checked. In the real window I found eight points, four of them bugs; two of those
+the roles had reported as checked. The Master measured why the checks missed them (a test mark that made inputs look
+human, a click in code instead of at the spot), and a new rule for all roles came out of it the same night.
+
+The case follows that order: what was reported as checked → what I found → why the checks missed it → the new rule,
+word for word → what changed afterwards. Every statement names its source (file, date, commit). The project and the
+service are not named, and one point that concerns signing in to the service is only counted.
 
 ## Numbers in these documents
 
-Each document is the state of its own day. The main README counts again, so some numbers differ: design rounds have
-continued since then (the Design 52 handoff says „Design 51“, the README counts later rounds). That handoff also says
-„Test 17“; in the README, *Test* counts only the rounds of the role itself (10). The other tests ran with me on the
-real devices and are listed there on their own line (6).
+Each document is the state of its own day. The main README counts again as of a later day, so numbers there can be
+higher.
 
 ## Files
 
-Both rounds were written in German, the working language of the whole system. The English versions were translated
+Everything was written in German, the working language of the whole system. The English versions were translated
 afterwards for readers; the German files are the originals.
 
 | File | Language | Translation |
 |---|---|---|
 | [`HANDOFF-bau-73.md`](HANDOFF-bau-73.md) | German (original) | [`HANDOFF-bau-73.en.md`](HANDOFF-bau-73.en.md) |
 | [`ABSCHLUSS-bau-73.md`](ABSCHLUSS-bau-73.md) | German (original) | [`ABSCHLUSS-bau-73.en.md`](ABSCHLUSS-bau-73.en.md) |
-| [`HANDOFF-design-52.md`](HANDOFF-design-52.md) | German (original) | [`HANDOFF-design-52.en.md`](HANDOFF-design-52.en.md) |
-| [`ABSCHLUSS-design-52.md`](ABSCHLUSS-design-52.md) | German (original) | [`ABSCHLUSS-design-52.en.md`](ABSCHLUSS-design-52.en.md) |
+| [`fall-abnahme.de.md`](fall-abnahme.de.md) | German (original) | [`fall-abnahme.md`](fall-abnahme.md) |
 
 **Redacted:** wherever a text named my domain, an address in my home network or a server provider, it now says
-`[entfernt]` ("removed"). In Design 52 that is only the list of search words the role used to check that nothing
-private was published. Build 73 needed no redaction. Everything else is as written, including file paths on my PC
-and my first name.
+`[entfernt]` ("removed"). Build 73 needed no redaction. Everything else is as written, including file paths on my
+PC and my first name. The case in example 2 is not a copy but a write-up; its quotes are word for word.

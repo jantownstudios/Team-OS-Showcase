@@ -10,7 +10,8 @@ im Hintergrund. Eine eigene Windows-App orchestriert sie alle und setzt die Rege
 
 Dieses Repo ist ein **Schaufenster**: Es zeigt, was entstanden ist und wie gearbeitet wird. Der Code selbst ist
 privat. Zwei echte, prüfbare Beispiele liegen in [`beispiel/`](beispiel/): ein Auftrag für eine Funktion mit
-Abnahmepunkten und der Bericht, der jeden einzeln belegt, und die Runde, die dieses Schaufenster gebaut hat.
+Abnahmepunkten und der Bericht, der jeden einzeln belegt, und eine Lieferung, die ich zurückgewiesen habe, obwohl die
+Rollen sie als geprüft gemeldet hatten.
 
 ![Aufbau: Ich plane mit dem Master, der Master gibt den Rollen Aufträge, die App startet sie, stellt MCP-Werkzeuge bereit und prüft jeden Werkzeug-Aufruf mit Hooks, jede Sitzung läuft über Claude Code](bilder/aufbau.png)
 
@@ -22,8 +23,8 @@ Abnahmepunkten und der Bericht, der jeden einzeln belegt, und die Runde, die die
 | **Wer** | ich, als AI Agent Builder, mit vielen Projekten gleichzeitig |
 | **KI** | Claude Code (das offizielle Programm von Anthropic), ohne Fenster gestartet, mit meinem eigenen Abo |
 | **App** | Windows, geschrieben in Rust, Oberfläche mit egui; dazu eine Web-Ansicht für Handy und Laptop |
-| **Zeitraum** | App seit 2026-10-27, Stand dieser Seite 2026-11-11 |
-| **Meine Rolle** | System entworfen, Entscheidungen getroffen, jede Lieferung abgenommen. **Den Code haben die KI-Rollen geschrieben.** |
+| **Zeitraum** | älteste datierte Entscheidung vom 2026-08-31, App seit 2026-10-27, Stand dieser Seite 2026-11-11 |
+| **Meine Rolle** | System entworfen, Entscheidungen getroffen, jede sichtbare Änderung abgenommen; Runden ohne sichtbare Änderung prüft der Master (Regel im Kern). **Den Code haben die KI-Rollen geschrieben.** |
 
 ## Was es ist
 
@@ -64,21 +65,23 @@ werden, wer was darf, wie geprüft wird, und wann etwas fertig ist.
 | 4 · Lieferung | Rolle | arbeitet im Hintergrund und schreibt einen Abschluss. |
 | 5 · Prüfung | Master | glaubt dem Bericht nicht, sondern prüft selbst: Tests, Änderungen lesen, eigene Bilder. |
 | 6 · Gegenprobe | Rolle Gegenprobe | versucht bei Sicherheitsthemen gezielt, die Sperren zu umgehen. Findet sie einen Weg, geht es zurück an Bau. |
-| 7 · Abnahme | ich | schaue mir das Ergebnis am echten Fenster an. |
+| 7 · Abnahme | ich | schaue mir jede sichtbare Änderung am echten Fenster an. Runden ohne eine enden mit der Prüfung des Masters. |
 | 8 · Auslieferung | Master | erst nach meinem Go: neue Version, Installationspaket, Notizen für alle Master. |
 
 **Warum so viele Stufen?** Ein Bericht ist keine Prüfung, und eine Prüfung ist keine Abnahme. Jede Stufe fängt
 andere Fehler. „Alle Tests grün“ allein zählt bei uns nicht als geprüft. Diese Regeln stammen aus echten Vorfällen
 in früheren Projekten.
 
-**Selbst nachsehen:** In [`beispiel/`](beispiel/) liegen die echten Handoffs und Abschlüsse von zwei Runden: ein Auftrag
-für eine Funktion mit Abnahmepunkten und der Bericht, der jeden einzeln belegt, und die Runde, die die erste Fassung
-dieses Schaufensters gebaut hat.
+**Selbst nachsehen:** In [`beispiel/`](beispiel/) liegen der echte Handoff einer Funktion mit Abnahmepunkten und
+der Abschluss, der jeden einzeln belegt, und [eine Lieferung, die ich zurückgewiesen
+habe](beispiel/fall-abnahme.de.md): Zwei Rollen meldeten sie als geprüft, ich fand am echten Fenster acht Punkte, und der
+Master hat gemessen, warum die Prüfungen sie übersehen hatten. Daraus entstand eine neue Regel für alle Rollen.
 
 ## Sieben Entscheidungen
 
 Sieben von 731 datierten Entscheidungen in 29 Projekten (gezählt am 2026-11-11), je Art eine und nach Art sortiert,
-nicht nach Wichtigkeit, jeweils in meinem Wortlaut.
+nicht nach Wichtigkeit, jeweils in meinem Wortlaut. Die 731 stammen aus allen Projekten seit Ende August (die älteste
+ist vom 2026-08-31), nicht nur aus den 15 Tagen der App.
 
 ### Wie sich ein Agent verhalten soll
 
@@ -213,8 +216,8 @@ Tests aus dem letzten vollen Testlauf, Projekte aus der Projektliste der App.
 |---|---|
 | Start der App | 2026-10-27 |
 | Versionen | **29**, von 0.1.0 (2026-10-28) bis 0.2.14 (2026-11-10) |
-| Commits im Code | 497 |
-| Runden je Rolle | Bau 73 · Design 55 · Gegenprobe 29 · Test 10 · Recherche 14 |
+| Commits im Code | 499 |
+| Runden je Rolle | Bau 73 · Design 56 · Gegenprobe 29 · Test 10 · Recherche 14 |
 | Tests mit mir | 6, am echten Handy, Laptop und PC |
 | Automatische Tests | 708 im letzten vollen Lauf |
 | Projekte in der App | rund 29 |
@@ -228,7 +231,7 @@ Tests aus dem letzten vollen Testlauf, Projekte aus der Projektliste der App.
 | Agenten | Claude Code, von der App ohne Fenster gestartet (`claude -p`, `stream-json`), ein Prozess je Sitzung; kein eigener Zugang, kein API-Schlüssel |
 | Werkzeuge | eigener MCP-Server der App; Hooks (`PreToolUse`, `Stop`) an jeder Sitzung |
 | Zusammenarbeit | Git; jede Rolle in eigener Arbeitskopie (Worktree) |
-| Lokal | Alles läuft auf meinem PC; Handy und Laptop greifen über einen eigenen verschlüsselten Zugang darauf zu. Keine Cloud-Dienste, keine Telemetrie. |
+| Lokal | Alles von mir läuft auf meinem PC; Handy und Laptop greifen über einen eigenen verschlüsselten Zugang darauf zu. Der einzige Dienst von außen ist Claude selbst (über Claude Code). Keine Telemetrie. |
 
 ---
 

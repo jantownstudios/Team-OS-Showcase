@@ -1,5 +1,7 @@
 **English** · [Deutsch](README.de.md)
 
+*This page was written in German and translated. The original is [README.de.md](README.de.md).*
+
 # Team-OS: an operating system for an AI team
 
 **Jan Prügel** · AI Agent Builder · [GitHub](https://github.com/jantownstudios)
@@ -10,7 +12,7 @@ had built for this orchestrates them all and enforces the rules.
 
 This repo is a **showcase**: it shows what was built and how the work is done. The code itself is private. Two real,
 checkable examples are in [`beispiel/`](beispiel/): a feature brief with acceptance tests and the report that
-backs each one, and the round that built this showcase.
+backs each one, and a delivery I rejected although the roles had reported it as checked.
 
 ![Architecture: I plan with the Master, the Master briefs the agent roles, the app starts them, provides MCP tools and checks every tool call with hooks, every session runs on Claude Code](bilder/architecture.png)
 
@@ -22,8 +24,8 @@ backs each one, and the round that built this showcase.
 | **Who** | me, as AI Agent Builder, with many projects at once |
 | **AI** | Claude Code (Anthropic's official CLI), run headless, on my own subscription |
 | **App** | Windows, written in Rust, UI with egui; plus a web app for phone and laptop |
-| **Period** | app since 2026-10-27, this page as of 2026-11-11 |
-| **My role** | designed the system, made the decisions, signed off every delivery. **The code was written by the AI roles.** |
+| **Period** | the oldest dated decision is from 2026-08-31, the app since 2026-10-27, this page as of 2026-11-11 |
+| **My role** | designed the system, made the decisions, signed off every visible change; rounds without a visible change are checked by the Master (a rule in the core). **The code was written by the AI roles.** |
 
 ## What it is
 
@@ -64,21 +66,23 @@ things are checked, and when something is done.
 | 4 · Delivery | role | works in the background and writes a completion report. |
 | 5 · Review | Master | does not trust the report but checks itself: tests, reading the changes, its own screenshots. |
 | 6 · Red team | role Red Team | on security topics, deliberately tries to get past the safeguards. If it finds a way, it goes back to Build. |
-| 7 · Sign-off | me | look at the result in the real window. |
+| 7 · Sign-off | me | look at every visible change in the real window. Rounds without one end with the Master's review. |
 | 8 · Release | Master | only after my go: new version, installer, notes for all Masters. |
 
 **Why so many stages?** A report is not a review, and a review is not a sign-off. Each stage catches different
 mistakes. "All tests green" alone does not count as checked here. These rules come from real incidents in earlier
 projects.
 
-**See for yourself:** [`beispiel/`](beispiel/) holds the real handoffs and completion reports of two rounds: a feature
-brief with acceptance tests and the report that backs each one, and the round that built the first version of this
-showcase.
+**See for yourself:** [`beispiel/`](beispiel/) holds the real handoff of a feature with acceptance tests and the
+completion report that backs each one, and [a delivery I rejected](beispiel/fall-abnahme.md): two roles
+reported it as checked, I found eight points in the real window, and the Master measured why the checks had missed
+them. A new rule for all roles came out of it.
 
 ## Seven decisions
 
 Seven of 731 dated decisions across 29 projects (counted 2026-11-11), one per kind of decision and sorted by kind,
-not by importance, each in my own words.
+not by importance, each in my own words. The 731 come from all projects since the end of August (the oldest is from
+2026-08-31), not only from the app's 15 days.
 
 ### How an agent should behave
 
@@ -226,8 +230,8 @@ from the last full test run, projects from the app's project list.
 |---|---|
 | App started | 2026-10-27 |
 | Versions | **29**, from 0.1.0 (2026-10-28) to 0.2.14 (2026-11-10) |
-| Commits in the code | 497 |
-| Rounds per role | Build 73 · Design 55 · Red Team 29 · Test 10 · Research 14 |
+| Commits in the code | 499 |
+| Rounds per role | Build 73 · Design 56 · Red Team 29 · Test 10 · Research 14 |
 | Hands-on tests with me | 6, on the real phone, laptop and PC |
 | Automated tests | 708 in the last full run |
 | Projects in the app | about 29 |
@@ -241,7 +245,7 @@ from the last full test run, projects from the app's project list.
 | Agents | Claude Code started by the app, headless (`claude -p`, `stream-json`), one process per session; no login of its own, no API key |
 | Tools | the app's own MCP server; hooks (`PreToolUse`, `Stop`) on every session |
 | Collaboration | Git; each role in its own working copy (worktree) |
-| Local | Everything runs on my PC; phone and laptop reach it through a private encrypted connection of my own. No cloud services, no telemetry. |
+| Local | Everything of mine runs on my PC; phone and laptop reach it through a private encrypted connection of my own. The only outside service is Claude itself (via Claude Code). No telemetry. |
 
 ---
 
